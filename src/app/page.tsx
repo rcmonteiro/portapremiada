@@ -5,6 +5,7 @@ import Button from "./_ui/Button";
 import Input from "./_ui/Input";
 import { updateSetup } from "./_functions/core";
 import { useEffect, useState } from "react";
+import Gift from "./_ui/Gift";
 
 const Setup = () => {
 
