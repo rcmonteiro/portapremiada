@@ -1,15 +1,22 @@
-const updateSetup = ([count, selected]: [number,number], update: any) => {
-  if(count<3) {
-    alert("A quantidade de portas não pode ser menor que 3!")
-    return false
-  }
-  if(selected<=0 || selected>count) {
-    alert("A porta premiada deve estar dentro do total de portas configurado")
-    return false
-  }
-  update([count, selected])
-  localStorage.setItem('doorSetup',JSON.stringify([count, selected]))
-  return true
+import DoorModel from "../_model/door"
+
+const createDoors = ([count, winnerDoor]: [number,number]): DoorModel[] => {
+  return Array.from({ length: count }, (_,i) => {
+    const number = i + 1
+    const hasGift = number === winnerDoor ? true : false
+    return new DoorModel(number, hasGift)
+  })
 }
 
-export {updateSetup}
+const updateDoors = (doors: DoorModel[], updatedDoor: DoorModel) => {
+  return doors.map((currentDoor) => {
+    if (currentDoor.number===updatedDoor.number)
+      return updatedDoor
+    return updatedDoor.opened ? currentDoor : currentDoor.unSelect()
+  })
+}
+
+export { 
+  createDoors,
+  updateDoors
+}
